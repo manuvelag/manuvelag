@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        table,tr,td,th{
+            margin: auto;
+            border: 1px solid black;
+            border-collapse: collapse;
+            text-align: center;
+            background-color: rgb(224, 168, 15);
+        }
+        input{
+            text-align: center;
+            background-color: rgb(224, 168, 15);
+        }
+        #demoinput{
+            background-color: rgb(224, 168, 15); 
+        }
+        #g1,#g11{
+            background-color: rgb(244, 5, 5);
+            color: white;
+            width: 60px;
+            border: 2px solid black;
+            text-align: right;
+        }
+        #g2,#g12{
+            background-color: rgb(231, 126, 34);
+            color: white;
+            width: 60px;
+            border: 2px solid black;
+            text-align: right;
+        }
+        #g3,#g13{
+            background-color: rgb(71, 138, 226);
+            color: white;
+            width: 60px;
+            border: 2px solid black;
+            text-align: right;
+        }
+        #g4,#g14{
+            background-color: rgb(28, 14, 14);
+            color: white;
+            width: 60px;
+            border: 2px solid black;
+            text-align: right;
+        }
+        #g5,#g15{
+            background-color: rgb(160, 105, 9);
+            color: white;
+            width: 60px;
+            border: 2px solid black;
+            text-align: right;
+        }
+        #txt7,#txt8{
+            margin: auto;
+            background-color: aqua;
+            text-align: center;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <table>
+        <tr>
+            <td>Process</td>
+            <td>Arrival time</td>
+            <td>Burst time</td>
+            <td>Priority</td>
+        </tr>
+        <tr>
+            <td>P1</td>
+            <td><button><input id="demoInput1" type="number" placeholder="0"></td>
+              <td>  <button><input id="demoInput2" type="number" placeholder="0"></button></td>
+              <td>  <button><input id="demoInput3" type="number" placeholder="0"></button></td>
+        </tr>
+        <tr>
+            <td>P2</td>
+            <td>  <button><input id="demoInput4" type="number" placeholder="0"></button></td>
+            <td>   <button><input id="demoInput5" type="number" placeholder="0"></button></td>
+            <td>   <button><input id="demoInput6" type="number" placeholder="0"></button></td>
+        </tr>
+        <tr>
+            <td>P3</td>
+            <td> <button><input id="demoInput7" type="number" placeholder="0"></button></td>
+            <td> <button><input id="demoInput8" type="number" placeholder="0"></button></td>
+            <td> <button><input id="demoInput9" type="number" placeholder="0"></button></td>
+        </tr>
+        <tr>
+            <td>P4</td>
+            <td>  <button><input id="demoInput10" type="number" placeholder="0"></button></td>
+            <td>   <button><input id="demoInput11" type="number" placeholder="0"></button></td>
+            <td>  <button><input id="demoInput12" type="number" placeholder="0"></button></td>
+        </tr>
+        <tr>
+            <td>P5</td>
+            <td> <button><input id="demoInput13"type="number" placeholder="0"></button></td>
+            <td>   <button><input id="demoInput14" type="number" placeholder="0"></button></td>
+            <td> <button><input id="demoInput15" type="number" placeholder="0"></button></td>
+        </tr>
+    </table>
+   
+    <br>
+    <br>
+
+    
+   
+
+    <br>
+    <br>
+   
+
+    
+    <br>
+    <br>
+
+    <button id="txt9"> Calculate for fcfs</button>
+    <script>
+         document.getElementById("txt9").addEventListener("click",avgWT);
+
+          
+
+
+function avgWT(){
+
+        // JavaScript program for implementation of FCFS
+    // scheduling
+        
+        
+    // Function to find the waiting time for all
+    // processes
+        function findWaitingTime(processes,n,bt,wt)
+        {
+            // waiting time for first process is 0
+            wt[0] = 0;
+    
+            // calculating waiting time
+            for (let i = 1; i < n; i++) {
+                wt[i] = bt[i - 1] + wt[i - 1];
+            }
+        }
+        
+        function findTurnAroundTime(processes,n,bt,wt,tat)
+        {
+            // calculating turnaround time by adding
+            // bt[i] + wt[i]
+            for (let i = 0; i < n; i++) {
+                tat[i] = bt[i] + wt[i];
+            }
+        }
+        
+        function findavgTime(processes,n,bt)
+        {
+            let wt = new Array(n), tat = new Array(n);
+            for(let i=0;i<n;i++)
+            {
+                wt[i]=0;
+                tat[i]=0;
+            }
+            let total_wt = 0, total_tat = 0;
+    
+            //Function to find waiting time of all processes
+            findWaitingTime(processes, n, bt, wt);
+    
+            //Function to find turn around time for all processes
+            findTurnAroundTime(processes, n, bt, wt, tat);
+    
+            //Display processes along with all details
+            document.write("Processes Burst time Waiting"
+                        +" time Turn around time<br>");
+    
+            // Calculate total waiting time and total turn
+            // around time
+            for (let i = 0; i < n; i++) {
+                total_wt = total_wt + wt[i];
+                total_tat = total_tat + tat[i];
+                document.write(" ", (i + 1)+" ");
+                document.write("	 "+ bt[i]+" ");
+                document.write("	 "+ wt[i]);
+                document.write("	 "+ tat[i]+"<br>");
+            }
+            let s = total_wt / n;
+            let t = Math.floor(total_tat / n);
+            document.write("Average waiting time = "+ s);
+            document.write("<br>");
+            document.write("Average turn around time = ", t+" ");
+        }
+        
+        let processes=[1,2,3];
+        let n = processes.length;
+        
+        let burst_time=[10,5,8];
+        findavgTime(processes, n, burst_time);}
+        
+        // This code is contributed by rag2127
+        
+    </script>
+    
+
+    
+    </body>
+    </html>
+
+
+
